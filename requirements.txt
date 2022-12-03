@@ -1,0 +1,4 @@
+pyTelegramBotAPI==4.8.0
+urllib3==1.26.13
+colorama==0.4.6
+emoji==2.2.0
