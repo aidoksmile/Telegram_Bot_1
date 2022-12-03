@@ -12,12 +12,14 @@ board = list(range(1, 10))
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    global game_status
-
-    board = list(range(1, 10))
     bot.send_message(message.chat.id, "Сыграем в крестики-нолики?\n")
+    global game_status
+    global x_chat_id
+    if game_status: 
+        return
+    board = list(range(1, 10))
     bot.send_message(message.chat.id, model.Draw_board(board))
-    bot.send_message(message.chat.id, f"\nХодит {player+1}-й игрок\nНапишите номер ячейки?")
+    bot.send_message(message.chat.id, f"\nИгорки ходят по очереди в своих телеграмах.\nНапишите номер ячейки")
     game_status = True
     x_chat_id = message.chat.id
 
@@ -29,6 +31,7 @@ def help_message(message):
 
 @bot.message_handler()
 def game_message(message):
+    global game_status
     if game_status == False:
         bot.send_message(message.chat.id, "Для начала игры нажмите /start\n")
         return
@@ -37,14 +40,15 @@ def game_message(message):
     if message.chat.id == x_chat_id:
         sign = "X"
     input_ans = model.Player_input(board, player_symbol, sign)
-    if input_ans != "":
+    print (input_ans)
+    if input_ans is not None:
         bot.send_message(message.chat.id, input_ans)
         return
     if model.Check_win(board):
         bot.send_message(message.chat.id, "Win!")
         game_status = False
         return 
-    model.Draw_board(board)
+    bot.send_message(message.chat.id, model.Draw_board(board))
 
 print("Бот работает")
 bot.polling()
