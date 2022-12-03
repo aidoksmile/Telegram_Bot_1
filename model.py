@@ -1,11 +1,11 @@
 # Создайте программу для игры в ""Крестики-нолики""
 
 def Draw_board(board):
-    s = "-" * 13 + "\n"
+    s = "-" * 6 + "\n"
     print("-" * 13)
     for i in range(3):
         s = s + "|" + str(board[0 + i * 3]) + "|" + str(board[1 + i * 3]) + "|" + str(board[2 + i * 3]) + "|" + "\n"
-        s = s + "-" * 13
+        s = s + "-" * 6 + "\n"
         print("|", board[0 + i * 3], "|", board[1 + i * 3], "|", board[2 + i * 3], "|")
         print("-" * 13)
     return s
